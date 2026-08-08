@@ -1,0 +1,57 @@
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: job-board-nginx
+    restart: "no"
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./src:/var/www/html
+    depends_on:
+      - php-fpm
+      - mysql
+    networks:
+      - job-board-network
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: job-board-php
+    restart: "no"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - job-board-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: job-board-mysql
+    restart: "no"
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_secret
+      MYSQL_DATABASE: job_board
+      MYSQL_USER: job_board_user
+      MYSQL_PASSWORD: secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - job-board-network
+
+volumes:
+  mysql-data:
+
+networks:
+  job-board-network:
+    driver: bridge

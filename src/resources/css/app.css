@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-primary-50: #f0fdfa;
+    --color-primary-100: #ccfbf1;
+    --color-primary-200: #99f6e4;
+    --color-primary-300: #5eead4;
+    --color-primary-400: #2dd4bf;
+    --color-primary-500: #14b8a6;
+    --color-primary-600: #0d9488;
+    --color-primary-700: #0f766e;
+    --color-primary-800: #115e59;
+    --color-primary-900: #134e4a;
+    --color-primary-950: #042f2e;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    @apply bg-gray-50 text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100;
+}
+
+.prose-content h1, .prose-content h2, .prose-content h3 {
+    @apply mt-4 mb-2 font-semibold text-gray-900 dark:text-white;
+}
+.prose-content h1 { @apply text-xl; }
+.prose-content h2 { @apply text-lg; }
+.prose-content h3 { @apply text-base; }
+.prose-content p { @apply my-2 leading-relaxed; }
+.prose-content ul { @apply my-2 list-disc pl-5; }
+.prose-content ol { @apply my-2 list-decimal pl-5; }
+.prose-content a { @apply text-primary-600 underline; }
+.prose-content strong { @apply font-semibold; }
