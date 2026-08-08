@@ -17,18 +17,18 @@ A full-stack, multi-role job board platform built on the **Laravel TALL stack** 
 
 ## Tech Stack
 
-| Technology | Version |
-|---|---|
-| PHP | [8.4](https://www.php.net/) (runtime, requires `^8.3`) |
-| Laravel | [13.x](https://laravel.com/) |
-| Livewire | [4.x](https://livewire.laravel.com/) |
-| Tailwind CSS | [4.x](https://tailwindcss.com/) |
-| Alpine.js | [3.x](https://alpinejs.dev/) |
-| Vite | [8.x](https://vite.dev/) |
-| MySQL | 8 |
-| Redis | 7 |
-| PHPUnit / Dusk | 12 / 8 |
-| Docker | Compose |
+| Technology     | Version                                                |
+| -------------- | ------------------------------------------------------ |
+| PHP            | [8.4](https://www.php.net/) (runtime, requires `^8.3`) |
+| Laravel        | [13.x](https://laravel.com/)                           |
+| Livewire       | [4.x](https://livewire.laravel.com/)                   |
+| Tailwind CSS   | [4.x](https://tailwindcss.com/)                        |
+| Alpine.js      | [3.x](https://alpinejs.dev/)                           |
+| Vite           | [8.x](https://vite.dev/)                               |
+| MySQL          | 8                                                      |
+| Redis          | 7                                                      |
+| PHPUnit / Dusk | 12 / 8                                                 |
+| Docker         | Compose                                                |
 
 ## Features
 
@@ -45,8 +45,8 @@ A full-stack, multi-role job board platform built on the **Laravel TALL stack** 
 
 ### Public pages
 
-| Home | Job listings | Job details | Companies |
-|---|---|---|---|
+| Home                                                        | Job listings                            | Job details                                 | Companies                                               |
+| ----------------------------------------------------------- | --------------------------------------- | ------------------------------------------- | ------------------------------------------------------- |
 | ![Home — featured jobs](screenshots/Home-Featured-Jobs.png) | ![Job board](screenshots/Job-Board.png) | ![Job details](screenshots/Job-Details.png) | ![Explore companies](screenshots/Explore-Companies.png) |
 
 - ![Home — top companies](screenshots/Home-Top-Companies.png) — home page top companies section
@@ -56,20 +56,19 @@ A full-stack, multi-role job board platform built on the **Laravel TALL stack** 
 
 ### Dashboards
 
-| Job seeker |
-|---|
+| Job seeker                                                    |
+| ------------------------------------------------------------- |
 | ![Job seeker dashboard](screenshots/Job-Seeker-Dashboard.png) |
 
 ### Admin panel
 
-| Dashboard | Users | Companies | Employers |
-|---|---|---|---|
+| Dashboard                                           | Users                                               | Companies                                                 | Employers                                                   |
+| --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------------- |
 | ![Admin dashboard](screenshots/Admin-Dashboard.png) | ![User management](screenshots/User-Management.png) | ![Company management](screenshots/Company-Management.png) | ![Employer management](screenshots/Employer-Management.png) |
 
-| Jobs | Categories | Skills |
-|---|---|---|
+| Jobs                                              | Categories                                        | Skills                                                  |
+| ------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------- |
 | ![Job management](screenshots/Job-Management.png) | ![Job categories](screenshots/Job-Categories.png) | ![Skills management](screenshots/Skills-Management.png) |
-
 
 ## Getting Started
 
@@ -121,12 +120,6 @@ docker exec job-board-php sh -lc 'cd /var/www/html && php artisan test'
 ```
 
 The suite runs against SQLite (`:memory:`) locally. See `AGENTS.md` for details.
-
-## Documentation
-
-- [AGENTS.md](AGENTS.md) — architecture, conventions, and commands for developers and AI agents.
-- [PLAN.md](PLAN.md) — the phase plan.
-- [TRACKER.md](TRACKER.md) — live progress tracking.
 
 ## License
 
