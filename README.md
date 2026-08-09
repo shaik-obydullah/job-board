@@ -30,16 +30,87 @@ A full-stack, multi-role job board platform built on the **Laravel TALL stack** 
 | PHPUnit / Dusk | 12 / 8                                                 |
 | Docker         | Compose                                                |
 
+## Architecture Overview
+
+```
+┌─────────────────────────────────────────────┐
+│              Docker Containers              │
+│  ┌───────────┐  ┌─────────┐  ┌───────────┐  │
+│  │  Nginx    │  │ Laravel │  │  MySQL    │  │
+│  │  :80     │→  │ PHP-FPM │→ │  :3306    │  │
+│  └───────────┘  └─────────┘  └───────────┘  │
+│                     │                       │
+│               ┌─────┴─────┐                 │
+│               │  Redis     │                │
+│               │  :6379     │                │
+│               └───────────┘                 │
+└─────────────────────────────────────────────┘
+
+TALL Stack: Tailwind CSS + Alpine.js + Laravel + Livewire
+```
+
 ## Features
 
-- **Auth & roles** — registration with role selection (job seeker / employer), email verification, password reset, session security, rate-limited auth, reCAPTCHA on signup, and banned-account enforcement.
-- **Job seekers** — a 12-section profile builder with a live completion score, public profiles, one-click applications, saved jobs, and applied-jobs tracking.
-- **Employers** — company profiles (logo, banner, verification), full job lifecycle (draft → published → closed/expired), featured jobs, and an applicant status pipeline (`pending → reviewed → shortlisted → rejected → hired`).
-- **Discovery** — live job search with keyword/location/category/type/experience filters, a company directory, and similar-job suggestions.
-- **Notifications** — in-app (database) notifications via a real-time bell + center, and queued email notifications.
-- **Admin panel** — a fully custom Livewire admin (no third-party admin builder): user management & banning, company verification, job moderation, category/skill management, and a dashboard with analytics.
-- **Performance & security** — Redis caching with explicit invalidation, database indexes on all filter paths, eager-loaded relationships.
-- **Testing** — 79 unit/feature tests (155 assertions), Dusk browser tests, Laravel Pint style enforcement.
+### Docker & TALL stack setup
+
+- Multi-container Docker setup — **Nginx** reverse proxy, **PHP-FPM**, **MySQL** (persistent volume), **Redis** for sessions/queues/cache.
+- TALL stack wired up: **Tailwind CSS** via Vite, **Alpine.js**, **Livewire**, plus a Makefile for common commands.
+
+### Database design
+
+- Full job-board schema: users, companies, jobs, job categories, skills (pivot), saved jobs, applications, company followers, activity logs.
+- Migrations with proper foreign keys, indexes, and soft deletes; Eloquent models with relationships; factories and seeders with realistic sample data.
+
+### Auth & roles
+
+- Multi-role registration with role selection (job seeker / employer), custom login, email verification, password reset, and logout.
+- Role-based middleware: `auth`, `role:job_seeker`, `role:employer`, `role:admin`, `guest`.
+- Banned-account enforcement, rate-limited auth, reCAPTCHA on signup.
+
+### Job seeker profile & CV builder
+
+- 12-section profile builder: basic info, summary, education, employment, certifications, skills (tag autocomplete), languages, portfolio, memberships, awards, hobbies, references.
+- Profile photo upload with resize + thumbnail (Intervention Image).
+- Live completion progress bar, PDF CV download (DOMPDF), public profile at `/u/{username}`, profile visibility settings.
+
+### Company profiles & job posting (employer)
+
+- Company profile CRUD — logo, banner, description, website, location, industry, size, contact info.
+- Job posting form with rich text, required skills tag selector, job type/experience/salary, location, deadline, and preview.
+- Job lifecycle management — draft/published/closed/expired, edit, close, repost, applicant counts.
+- Applicant tracking pipeline: `pending → reviewed → shortlisted → rejected → hired`, view applicant profile, download applicant CV.
+- Company analytics — job views, total applications, follower count.
+
+### Job search & discovery (job seeker)
+
+- Homepage — hero search, featured jobs carousel, popular categories, recent jobs, stats.
+- Live job search with filters: category, job type, experience level, salary slider, location, date posted; sort by relevance/date/salary; Livewire pagination.
+- Job detail pages with company sidebar, "Apply Now", related jobs.
+- Company directory with search, follow/unfollow, and company pages.
+- Save/bookmark jobs and an "Applied Jobs" page.
+
+### Applications & notifications
+
+- One-click apply with cover letter; auto-attaches the user's profile CV; confirmation notification.
+- Notification system — in-app (database) plus queued email: new application to employer, status changes to job seeker, new jobs matching saved searches, new jobs from followed companies.
+- Notification center with bell icon + dropdown; markdown email templates; Redis-backed queue.
+
+### UI/UX polish
+
+- Consistent design system (colors, typography, button/card/form/modal/badge components).
+- Mobile-first responsive design with hamburger menu and slide-out filters.
+- Dark mode toggle, skeleton loaders, `wire:loading` states, empty states, toasts, breadcrumbs.
+
+### Admin panel & analytics
+
+- Dashboard with totals/charts, user management (ban/unban, roles), company verification, job moderation, category & skill management, system settings.
+
+### Testing, optimization & security
+
+- Feature tests for Livewire components, unit tests for models, Dusk browser tests.
+- Database indexing, eager loading, Redis caching, image optimization, queued heavy operations.
+- CSRF, XSS/SQL-injection protection, bcrypt hashing, rate limiting, reCAPTCHA.
+- SEO — per-page meta/Open Graph tags, sitemap, clean slug URLs.
 
 ## Screenshots
 
